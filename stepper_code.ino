@@ -1,5 +1,5 @@
-int dir_pin;
-int step_pin;
+int dir_pin = 9;
+int step_pin = 10;
 
 void setup() {
   Serial.begin(9600);
@@ -7,10 +7,11 @@ void setup() {
   pinMode(step_pin, OUTPUT);
   pinMode(dir_pin, OUTPUT);
   digitalWrite(dir_pin, LOW);
+
+  Serial.println("Enter data: ");
 }
 
 void loop() {
-  Serial.println("Enter data: ");
 
   if (Serial.available() > 0) {
   
@@ -27,16 +28,20 @@ void loop() {
   Serial.println("No. of revolutions: ");
   Serial.println(rev);
 
+  if (direction == 'w'){
+    Serial.println("Direction: Forward");
+  }else if (direction == 's'){
+    Serial.println("Direction: Backward");
+  }
+
   for (int i = 0; i < 200*rev; i++){
     if (direction == 'w'){
-      Serial.println("Direction: Forward");
       digitalWrite(dir_pin, HIGH); //forward dir
       digitalWrite(step_pin, HIGH);
       delay(speed);
       digitalWrite(step_pin, LOW);
       delay(speed);
     } else if (direction == 's'){
-      Serial.println("Direction: Backward");
       digitalWrite(dir_pin, LOW); //backward dir
       digitalWrite(step_pin, HIGH);
       delay(speed);
